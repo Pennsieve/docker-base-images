@@ -1,0 +1,7 @@
+version: '3'
+services:
+
+  logstash:
+    hostname: logstash
+    image: blackfynn/logstash:6.4.1
+    build: .

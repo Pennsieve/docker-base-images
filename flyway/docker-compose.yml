@@ -1,0 +1,14 @@
+version: '3'
+services:
+  flywayhub:
+    image: pennsieve/flyway:4.2.0
+    build:
+      context: .
+      args:
+        FLYWAY_VERSION: 4.2.0
+  flywayregistry:
+    image: docker.pennsieve.io/flyway:4.2.0
+    build:
+      context: .
+      args:
+        FLYWAY_VERSION: 4.2.0

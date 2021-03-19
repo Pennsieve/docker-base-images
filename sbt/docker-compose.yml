@@ -1,0 +1,14 @@
+version: '3'
+services:
+  sbthub:
+    image: pennsieve/sbt:1.2.8
+    build:
+      context: .
+      args:
+        SBT_VERSION: 1.2.8
+  sbthublatest:
+    image: pennsieve/sbt:latest
+    build:
+      context: .
+      args:
+        SBT_VERSION: 1.2.8

@@ -1,0 +1,10 @@
+*.swp
+*.swo
+.DS_Store
+.vagrant
+MATLAB/
+tmp/
+installer
+installation_key
+license.lic
+output.txt

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  tomcat:
+    image: pennsieve/tomcat-cloudwrap:8-jre-alpine-${CLOUDWRAP_VERSION}
+    build:
+      context: .
+      args:
+        CLOUDWRAP_VERSION: ${CLOUDWRAP_VERSION}
+  tomcatlatest:
+    image: pennsieve/tomcat-cloudwrap:latest
+    build:
+      context: .
+      args:
+        CLOUDWRAP_VERSION: ${CLOUDWRAP_VERSION}

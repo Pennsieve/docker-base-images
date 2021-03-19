@@ -1,0 +1,5 @@
+version: '3.5'
+services:
+  java:
+    image: blackfynn/java-python:openjdk-jre-8
+    build: .

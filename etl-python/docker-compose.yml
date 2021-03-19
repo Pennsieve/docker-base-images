@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  etl-python:
+    image: blackfynn/etl-python
+    build:
+      context: .
+      target: build
+  etl-python-test:
+    image: blackfynn/etl-python:test
+    build:
+      context: .
+      target: test

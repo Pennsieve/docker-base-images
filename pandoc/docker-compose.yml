@@ -1,0 +1,6 @@
+version: "3"
+services:
+
+  pandoc:
+   image: blackfynn/pandoc:2.3
+   build: .

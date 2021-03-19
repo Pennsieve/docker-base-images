@@ -1,0 +1,279 @@
+\documentclass{article}
+
+\usepackage{longtable}\setlength{\LTleft}{1em}
+%\usepackage{longtable}
+\usepackage{booktabs}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Colors                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[table,xcdraw]{xcolor}
+
+%% Define Color Scheme
+\definecolor{EndeavourBlue}{HTML}{204A87}
+\definecolor{MidnightExpressBlue}{HTML}{071540}
+
+\definecolor{AffairPurple}{HTML}{75507B}
+\definecolor{FreeSpeechRed}{HTML}{CC0000}
+
+\definecolor{SugarCaneGrey}{HTML}{EEEEEC}
+\definecolor{GunmetalGrey}{HTML}{2e3436}
+
+%% Define Blackfynn Color scheme
+\definecolor{White}{HTML}{ffffff}
+\definecolor{Black}{HTML}{000000}
+
+\definecolor{WhisperGrey}{HTML}{e7e6e6}
+\definecolor{DarkGrey}{HTML}{a5a5a5}
+
+\definecolor{WestSideOrange}{HTML}{ed7d31}
+\definecolor{AmberYellow}{HTML}{ffc000}
+
+\definecolor{AppleGreen}{HTML}{70ad47}
+
+\definecolor{PictonBlue}{HTML}{5b9bd5}
+\definecolor{RoyalBlue}{HTML}{2760ff}
+\definecolor{MidnightBlue}{HTML}{27343f}
+
+%% Define Blackfynn Brand Colors
+\definecolor{Neuron}{HTML}{071540} % Dark Blue
+\definecolor{Dopamine}{HTML}{2760FF} % Light Blue
+\definecolor{Synapse}{HTML}{E94B4B} % Red (heavy warning)
+\definecolor{Nucleus}{HTML}{17BB62} % Green
+
+%% Define Blackfynn Secondary Palette
+\definecolor{Serotonin}{HTML}{11396C}
+\definecolor{GABA}{HTML}{2760FF}
+\definecolor{Acetylcholine}{HTML}{1F53E4}
+\definecolor{Noradrenaline}{HTML}{FBFBFD}
+
+%% Neutrals
+\definecolor{Black}{HTML}{000000}
+\definecolor{WhiteMatter}{HTML}{FFFFFF}
+\definecolor{Dendrite}{HTML}{FAFAFA}
+\definecolor{Axon}{HTML}{F1F1F3}
+\definecolor{Cortex}{HTML}{DADADA}
+\definecolor{Soma}{HTML}{BDBDBD}
+\definecolor{Synapse}{HTML}{71747C}
+\definecolor{Myelin}{HTML}{404554}
+
+%% Define Blackfynn Tertiary Colors
+\definecolor{SubstanceP}{HTML}{FFB000}
+\definecolor{Adenosine}{HTML}{FFE393}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonts and typography   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fc-list to list fonts
+
+\usepackage[no-math]{fontspec}
+
+%% Typography
+\defaultfontfeatures{Mapping = tex-text, Scale = MatchLowercase}
+
+%% Fonts
+\setmainfont{Sharp Sans Display No1}
+\setmonofont{Sharp Sans Display No1}
+\setsansfont{Sharp Sans Display No1}
+
+%% Headings Fonts
+\newfontfamily\sectionfontfamily[Color=Neuron]{Sharp Sans Display No1}
+\newfontfamily\subsectionfontfamily[Color=Dopamine]{Sharp Sans Display No1}
+\newfontfamily\subsubsectionfontfamily[Color=Dopamine]{Sharp Sans Display No1}
+
+\usepackage{sectsty}
+\sectionfont{\sectionfontfamily\fontsize{20}{20}\selectfont}
+\subsectionfont{\subsectionfontfamily\fontsize{16}{16}\selectfont}
+\subsubsectionfont{\subsubsectionfontfamily\fontsize{14}{14}\selectfont}
+
+%% Set polyglossia language
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Create signature boxes %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Signature box
+\newcommand\signaturebox{%%
+  \fbox{\rule{4.5in}{0pt}\rule[-0.5ex]{0pt}{10ex}}}
+\pagestyle{empty}
+
+%% Name box
+\newcommand\namebox{%%
+    \fbox{\rule{3.0in}{0pt}\rule[-0.5ex]{0pt}{5ex}}}
+\pagestyle{empty}
+
+%% Date box
+\newcommand\datebox{%%
+    \fbox{\rule{1.25in}{0pt}\rule[-0.5ex]{0pt}{5ex}}}
+\pagestyle{empty}
+
+%% Checkbox
+\newcommand\checkbox{%%
+    \fbox{\rule{.2in}{0pt}\rule[-0.5ex]{0pt}{3ex}}}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page Setup             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use full page in book style
+\usepackage{fullpage}
+
+%% Set line spacing
+\usepackage{setspace}
+\setstretch{1.2}
+
+%% Disable paragraph indentation
+\usepackage{parskip}
+
+%% Start sections from new page
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Headers and Footers    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Set header and footer
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+\usepackage{geometry}
+
+\geometry{
+  top=1.20in,            % <-- you want to adjust this
+  inner=1.0in,
+  outer=1.0in,
+  bottom=1.0in,
+  headheight=8ex,       % <-- and this
+  headsep=5ex,          % <-- and this
+}
+
+\renewcommand{\headrulewidth}{0pt}
+\patchcmd{\fancyhead}{\rlap}{\color{Neuron}\rhead}{}{}
+\patchcmd{\headrule}{\hrule}{\color{Neuron}\hrule}{}{}
+
+%% Create header
+\pagestyle{fancy}
+\lhead{}
+\rhead{\includegraphics[width=4.8cm]{./common/images/bfheader}\\\color{Neuron}Published \today}
+\cfoot{\thepage}
+\rfoot{VCS Commit Hash: \href{$COMMITURL$}{$COMMITSHA$}}
+
+
+
+%% Links/Hyperref
+\usepackage[colorlinks, breaklinks, bookmarks, xetex]{hyperref}
+
+\hypersetup {
+  linkcolor = Dopamine,
+  citecolor = Dopamine,
+  filecolor = Dopamine,
+  urlcolor = Dopamine
+}
+
+%% Don’t use Mono font for URLs
+\urlstyle{same}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listings               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{listings}
+
+\lstdefinelanguage{JavaScript}{
+  keywords = {typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle = \color{SkyBlue}\bfseries,
+  ndkeywords = {class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle = \color{GunmetalGrey}\bfseries,
+  identifierstyle = \color{Black},
+  sensitive = false,
+  comment = [l]{//},
+  morecomment = [s]{/*}{*/},
+  commentstyle = \color{Plum}\ttfamily,
+  stringstyle = \color{FreeSpeechRed}\ttfamily,
+  morestring = [b]',
+  morestring = [b]"
+}
+
+\lstset{
+  language = JavaScript,
+  backgroundcolor = \color{SugarCaneGrey},
+  extendedchars = true,
+  basicstyle = \normalsize\ttfamily,
+  showstringspaces = false,
+  showspaces = false,
+  tabsize = 1,
+  breaklines = true,
+  showtabs = false
+}
+
+\def\tightlist{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Misc Packages          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Images
+\usepackage{graphicx}
+
+%% Package to create a cell in a table
+\usepackage{makecell}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pandoc hacks           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Normal enumerates processing
+\usepackage{enumerate}
+
+%% Disable section numbers
+\setcounter{secnumdepth}{0}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Start Document         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+  $body$
+
+  \begin{center}
+    \section{Electronic Signature}
+  \end{center}
+
+  \begin{table}[ht]
+  \centering
+    \begin{tabular}{|ll|}
+      \hline
+      \multicolumn{2}{|l|}{\cellcolor{Axon}{Electronic Signature:}} \\
+      \multicolumn{2}{|l|}{\signaturebox} \\
+      & \\
+      \hline
+      \rowcolor{Axon} First and Last Name & Date \\
+      \namebox & \datebox \\
+      & \\
+      \multicolumn{2}{|l|}{\makecell{
+        \hspace{.5cm}I understand that electronically signing this document constitutes  \\
+        \hspace{.5cm}a legal signature confirming that I acknowledge and warrant the \\
+        \hspace{.5cm}truthfulness of the information provided in this document.
+      }} \\
+      \hline
+    \end{tabular}
+  \end{table}
+
+
+\end{document}

@@ -1,0 +1,25 @@
+events {
+}
+
+http {
+  ssl_certificate     /etc/nginx/certs/${CERTIFICATE_NAME};
+  ssl_certificate_key /etc/nginx/certs/${CERTIFICATE_KEY_NAME};
+
+  server {
+    listen ${LISTEN_PORT} ssl;
+
+    # Route all requests to the service container
+    location / {
+      proxy_pass http://${SERVICE_NAME}:${SERVICE_PORT};
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+      # Proxy request bodies of any size
+      client_max_body_size 0;
+
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+    }
+  }
+}

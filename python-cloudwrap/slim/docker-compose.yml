@@ -1,0 +1,8 @@
+version: '3'
+services:
+  python:
+    image: pennsieve/python-cloudwrap:3.7-slim-0.5.9
+    build: .
+  pythonlatest:
+    image: pennsieve/python-cloudwrap:3.7-slim-latest
+    build: .

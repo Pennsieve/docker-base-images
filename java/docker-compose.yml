@@ -1,0 +1,8 @@
+version: '3'
+services:
+  java:
+    image: docker.blackfynn.io/java:8-jre-alpine
+    build: .
+  javalatest:
+    image: docker.blackfynn.io/java:latest
+    build: .

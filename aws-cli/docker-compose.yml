@@ -1,0 +1,8 @@
+version: '3'
+services:
+  sbthub:
+    image: pennsieve/aws-cli:1.0.0
+    build: .
+  sbtregistry:
+    image: docker.pennsieve.io/aws-cli:1.0.0
+    build: .

@@ -1,0 +1,5 @@
+version: '3.5'
+services:
+  java:
+    image: pennsieve/java-python-cloudwrap:openjdk-jre-8
+    build: .

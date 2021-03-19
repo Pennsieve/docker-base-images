@@ -1,0 +1,5 @@
+version: '3.8'
+services:
+  openjdk:
+    image: pennsieve/openjdk:8-alpine3.9
+    build: .

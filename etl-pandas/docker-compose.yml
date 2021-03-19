@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  etl-python:
+    image: blackfynn/etl-pandas:0.22.0
+    build:
+      context: .
+      target: build
+      args:
+        PANDAS_VERSION: 0.22.0
+  etl-python-test:
+    image: blackfynn/etl-pandas:0.22.0-test
+    build:
+      context: .
+      target: test
+      args:
+        PANDAS_VERSION: 0.22.0

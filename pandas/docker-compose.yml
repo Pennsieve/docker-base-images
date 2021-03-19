@@ -1,0 +1,9 @@
+version: '3'
+services:
+  pandas:
+    image: blackfynn/pandas:0.24.0
+    build:
+      context: .
+      args:
+        NUMPY_VERSION: 1.16.1
+        PANDAS_VERSION: 0.23.0

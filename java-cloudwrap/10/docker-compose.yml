@@ -1,0 +1,14 @@
+version: '3'
+services:
+  java:
+    image: pennsieve/java-cloudwrap:10-jre-slim-${CLOUDWRAP_VERSION}
+    build: 
+      context: .
+      args:
+        CLOUDWRAP_VERSION: ${CLOUDWRAP_VERSION}
+  javalatest:
+    image: pennsieve/java-cloudwrap:latest
+    build:
+      context: .
+      args:
+        CLOUDWRAP_VERSION: ${CLOUDWRAP_VERSION}

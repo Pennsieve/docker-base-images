@@ -1,0 +1,8 @@
+version: '3.4'
+services:
+  clamav:
+    build: .
+    image: pennsieve/clamav
+    volumes:
+      - ./tests:/tmp/tests
+    command: /tmp/tests/test1.txt

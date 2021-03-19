@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  nginx-sidecar:
+    build:
+      context: .
+      args:
+        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+        AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+        CERTIFICATES_BUCKET: "pennsieve-certs"
+        CERTIFICATE_NAME: "pennsieve.crt"
+        CERTIFICATE_KEY_NAME: "pennsieve.key"
+    image: pennsieve/nginx-sidecar:${IMAGE_TAG}
+
+  nginx-sidecar-test:
+    build:
+      context: .
+      args:
+        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+        AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+        CERTIFICATES_BUCKET: "pennsieve-certs"
+        CERTIFICATE_NAME: "localhost.crt"
+        CERTIFICATE_KEY_NAME: "localhost.key"
+    ports:
+      - "8443:8443"
+    environment:
+      LISTEN_PORT: 8443
+      SERVICE_NAME: service
+      SERVICE_PORT: 8080
+      PARAMS: $$CERTIFICATE_NAME:$$CERTIFICATE_KEY_NAME:$$LISTEN_PORT:$$SERVICE_NAME:$$SERVICE_PORT
+    depends_on:
+      - service
+
+  service:
+    build: ./test
+    command: python /app/app.py

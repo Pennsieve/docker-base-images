@@ -1,0 +1,16 @@
+version: '3'
+services:
+  node:
+    image: pennsieve/node-cloudwrap:${NODE_VERSION}-${CLOUDWRAP_VERSION}
+    build:
+      context: .
+      args:
+        CLOUDWRAP_VERSION: ${CLOUDWRAP_VERSION}
+        NODE_VERSION: ${NODE_VERSION}
+  nodelatest:
+    image: pennsieve/node-cloudwrap:${NODE_VERSION}-latest
+    build:
+      context: .
+      args:
+        CLOUDWRAP_VERSION: ${CLOUDWRAP_VERSION}
+        NODE_VERSION: ${NODE_VERSION}

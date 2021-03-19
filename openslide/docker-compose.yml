@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+  openslide:
+    build:
+      context: .
+      target: build
+    container_name: openslide
+    image: blackfynn/openslide

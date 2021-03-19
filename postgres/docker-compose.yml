@@ -1,0 +1,8 @@
+version: '3'
+services:
+  postgres:
+    image: pennsieve/postgres:9.6.5
+    build: .
+  postgreslatest:
+    image: pennsieve/postgres:latest
+    build: .

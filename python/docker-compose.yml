@@ -1,0 +1,8 @@
+version: '3'
+services:
+  python:
+    image: docker.blackfynn.io/python:2.7.13-alpine3.6
+    build: .
+  pythonlatest:
+    image: docker.blackfynn.io/python:latest
+    build: .
