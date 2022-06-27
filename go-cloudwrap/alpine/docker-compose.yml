@@ -1,0 +1,8 @@
+version: '3'
+services:
+  go:
+    image: pennsieve/go-cloudwrap:1.18-alpine
+    build: .
+  golatest:
+    image: pennsieve/go-cloudwrap:1.18-alpine-latest
+    build: .
