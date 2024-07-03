@@ -1,4 +1,4 @@
-FROM postgres:12.5-alpine
+FROM postgres:16.3-alpine
 
 USER root
 
