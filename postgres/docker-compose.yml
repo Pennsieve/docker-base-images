@@ -1,8 +1,10 @@
 version: '3'
 services:
   postgres:
+    platform: linux/amd64
     image: pennsieve/postgres:16.3
     build: .
   postgreslatest:
+    platform: linux/amd64
     image: pennsieve/postgres:latest
     build: .
