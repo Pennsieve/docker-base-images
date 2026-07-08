@@ -11,8 +11,8 @@ ansiColor('xterm') {
       def DIRECTORY = params.DIRECTORY
 
       dir("$DIRECTORY") {
-        sh 'docker-compose build'
-        sh 'docker-compose push'
+        sh 'docker compose build'
+        sh 'docker compose push'
       }
     }
   }
