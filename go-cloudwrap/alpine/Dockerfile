@@ -2,7 +2,7 @@ FROM golang:1.25-alpine
 
 RUN apk update && apk add --no-cache openssl
 
-ARG CLOUDWRAP_VERSION=0.5.9
+ARG CLOUDWRAP_VERSION=1.0.0
 
 RUN wget -O cloudwrap_${CLOUDWRAP_VERSION}_x86_64.apk \
         https://github.com/Pennsieve/cloudwrap/releases/download/${CLOUDWRAP_VERSION}/cloudwrap_${CLOUDWRAP_VERSION}_x86_64.apk
