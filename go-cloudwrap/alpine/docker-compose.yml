@@ -1,10 +1,10 @@
 version: '3'
 services:
   go:
-    image: pennsieve/go-cloudwrap:1.25-alpine
+    image: pennsieve/go-cloudwrap:1.27-alpine
     platform: linux/amd64
     build: .
   golatest:
-    image: pennsieve/go-cloudwrap:1.25-alpine-latest
+    image: pennsieve/go-cloudwrap:1.27-alpine-latest
     platform: linux/amd64
     build: .
