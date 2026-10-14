@@ -6,8 +6,12 @@ connections over HTTPS on a specific port (8443), and forwarding those
 requests to the main service over an insecure connection (thereby
 terminating SSL).
 
-This image contains blackfynn server certificates that enable
-encrypted connection between the ALB and an ECS task.
+The image contains no certificate. On start, `entrypoint.sh` generates
+a self-signed certificate and key for that container in
+`/etc/nginx/certs` (`$CERTIFICATE_NAME` / `$CERTIFICATE_KEY_NAME`,
+default `pennsieve.crt` / `pennsieve.key`). ALBs don't validate target
+certificates, so a per-task certificate encrypts ALB-to-task traffic
+without a key shared between services or stored in the image.
 
 ## Usage
 
