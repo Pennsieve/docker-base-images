@@ -10,9 +10,15 @@ ansiColor('xterm') {
 
       def DIRECTORY = params.DIRECTORY
 
+      // Compose files that tag with ${IMAGE_TAG} (nginx-sidecar) get the
+      // commit being built, so each build pushes a new tag.
+      def imageTag = sh(returnStdout: true, script: 'git rev-parse --short=7 HEAD').trim()
+
       dir("$DIRECTORY") {
-        sh 'docker compose build'
-        sh 'docker compose push'
+        withEnv(["IMAGE_TAG=${imageTag}"]) {
+          sh 'docker compose build'
+          sh 'docker compose push'
+        }
       }
     }
   }
