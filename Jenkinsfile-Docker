@@ -1,23 +1,80 @@
 #!groovy
 
+// Copies each pennsieve/<name>:<tag> image the build pushed to pennsieve-cc ECR
+// by digest, when infrastructure ops/ecr has a repo of that name; ECR replicates
+// it to clin. Same approach as CopyImageToEcr in Pennsieve/operations
+// jenkins-service-deploy. Idempotent; fails if an ECR copy and Docker Hub
+// disagree, e.g. a tag rebuilt after it was copied.
+def CopyImagesToEcr() {
+  sh '''
+    set -eu
+    REGISTRY="$(aws sts get-caller-identity --query Account --output text).dkr.ecr.us-east-1.amazonaws.com"
+    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "$REGISTRY"
+
+    for SOURCE in $(docker compose config --images | grep -E '^pennsieve/[^:]+:.+$' | sort -u); do
+      REPO="${SOURCE%%:*}"
+      if ! err=$(aws ecr batch-get-image --region us-east-1 --repository-name "$REPO" --image-ids imageTag=none 2>&1 >/dev/null); then
+        case "$err" in
+          *RepositoryNotFoundException*) echo "No $REPO repo in pennsieve-cc ECR; nothing to copy"; continue ;;
+          *) echo "$err"; exit 1 ;;
+        esac
+      fi
+
+      TARGET="$REGISTRY/$SOURCE"
+      src=$(docker buildx imagetools inspect "$SOURCE" --format '{{json .Manifest}}')
+      src=$(echo "$src" | jq -r .digest)
+
+      if dst=$(docker buildx imagetools inspect "$TARGET" --format '{{json .Manifest}}' 2>/dev/null); then
+        echo "$TARGET already in ECR"
+      else
+        docker buildx imagetools create --prefer-index=false --tag "$TARGET" "$SOURCE"
+        dst=$(docker buildx imagetools inspect "$TARGET" --format '{{json .Manifest}}')
+      fi
+      dst=$(echo "$dst" | jq -r .digest)
+
+      if [ "$src" != "$dst" ]; then
+        echo "Digest mismatch: $SOURCE is $src, $TARGET is $dst"
+        exit 1
+      fi
+      echo "$TARGET is $dst"
+    done
+  '''
+}
+
 ansiColor('xterm') {
 
   node('executor') {
+
+    def DIRECTORY = params.DIRECTORY
+
+    // Compose files that tag with ${IMAGE_TAG} (nginx-sidecar) get the
+    // commit being built, so each build pushes a new tag.
+    def imageTag
 
     stage('Build') {
 
       checkout scm
 
-      def DIRECTORY = params.DIRECTORY
-
-      // Compose files that tag with ${IMAGE_TAG} (nginx-sidecar) get the
-      // commit being built, so each build pushes a new tag.
-      def imageTag = sh(returnStdout: true, script: 'git rev-parse --short=7 HEAD').trim()
+      imageTag = sh(returnStdout: true, script: 'git rev-parse --short=7 HEAD').trim()
 
       dir("$DIRECTORY") {
         withEnv(["IMAGE_TAG=${imageTag}"]) {
           sh 'docker compose build'
           sh 'docker compose push'
+        }
+      }
+    }
+
+    // The image is already on Docker Hub, so a failure only marks the build
+    // unstable.
+    stage('Copy to ECR') {
+      dir("$DIRECTORY") {
+        withEnv(["IMAGE_TAG=${imageTag}"]) {
+          try {
+            CopyImagesToEcr()
+          } catch (err) {
+            unstable("Copying images to ECR failed: ${err}")
+          }
         }
       }
     }
