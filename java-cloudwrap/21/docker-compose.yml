@@ -1,0 +1,14 @@
+services:
+  java:
+    image: pennsieve/java-cloudwrap:21-jre-alpine-${IMAGE_TAG}
+    platform: linux/amd64
+    build:
+      context: .
+      target: java
+
+  tomcat:
+    image: pennsieve/tomcat-cloudwrap:9-jre21-alpine-${IMAGE_TAG}
+    platform: linux/amd64
+    build:
+      context: .
+      target: tomcat
