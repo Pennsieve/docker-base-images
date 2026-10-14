@@ -2,27 +2,11 @@ version: "3.7"
 
 services:
   nginx-sidecar:
-    build:
-      context: .
-      args:
-        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-        AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
-        CERTIFICATES_BUCKET: "pennsieve-certs"
-        CERTIFICATE_NAME: "pennsieve.crt"
-        CERTIFICATE_KEY_NAME: "pennsieve.key"
+    build: .
     image: pennsieve/nginx-sidecar:${IMAGE_TAG}
 
   nginx-sidecar-test:
-    build:
-      context: .
-      args:
-        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-        AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
-        CERTIFICATES_BUCKET: "pennsieve-certs"
-        CERTIFICATE_NAME: "localhost.crt"
-        CERTIFICATE_KEY_NAME: "localhost.key"
+    build: .
     ports:
       - "8443:8443"
     environment:
